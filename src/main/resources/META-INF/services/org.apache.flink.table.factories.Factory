@@ -1,0 +1,2 @@
+com.github.anora10.flink.rss.connector.FlinkRssConnectorTableSourceFactory
+com.github.anora10.flink.rss.connector.XmlFormatFactory
