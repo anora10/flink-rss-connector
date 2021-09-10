@@ -3,12 +3,11 @@ package com.github.anora10.flink.rss.connector;
 import java.io.StringWriter;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
-import org.w3c.dom.Element;
-
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.Element;
 
 public class RssConnectorUtils {
 
@@ -17,8 +16,7 @@ public class RssConnectorUtils {
   private static DateTimeFormatter formatter =
       DateTimeFormatter.ofPattern(FAKER_DATETIME_FORMAT, new Locale("us"));
 
-  public static String transformXmlToString(Element xmlElement)
-  {
+  public static String transformXmlToString(Element xmlElement) {
     String xmlString = null;
     TransformerFactory tf = TransformerFactory.newInstance();
     Transformer transformer;
@@ -29,12 +27,10 @@ public class RssConnectorUtils {
       // transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
 
       StringWriter writer = new StringWriter();
-      //transform document to string
+      // transform document to string
       transformer.transform(new DOMSource(xmlElement), new StreamResult(writer));
       xmlString = writer.getBuffer().toString();
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       e.printStackTrace();
     }
     return xmlString;

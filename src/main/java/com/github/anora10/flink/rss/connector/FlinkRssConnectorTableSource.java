@@ -21,10 +21,11 @@ public class FlinkRssConnectorTableSource implements ScanTableSource {
   private final String[] uris;
   private final Integer refreshInterval;
 
-  public FlinkRssConnectorTableSource (DecodingFormat<DeserializationSchema<RowData>> decodingFormat,
-                                       DataType producedDataType,
-                                       String[] uris,
-                                       Integer refreshInterval) {
+  public FlinkRssConnectorTableSource(
+      DecodingFormat<DeserializationSchema<RowData>> decodingFormat,
+      DataType producedDataType,
+      String[] uris,
+      Integer refreshInterval) {
     this.decodingFormat = decodingFormat;
     this.producedDataType = producedDataType;
     this.uris = uris;
@@ -33,7 +34,8 @@ public class FlinkRssConnectorTableSource implements ScanTableSource {
 
   @Override
   public DynamicTableSource copy() {
-    return new FlinkRssConnectorTableSource(decodingFormat, producedDataType, uris, refreshInterval);
+    return new FlinkRssConnectorTableSource(
+        decodingFormat, producedDataType, uris, refreshInterval);
   }
 
   @Override
@@ -48,12 +50,11 @@ public class FlinkRssConnectorTableSource implements ScanTableSource {
 
   @Override
   public ScanRuntimeProvider getScanRuntimeProvider(ScanContext runtimeProviderContext) {
-    final DeserializationSchema<RowData> deserializer = decodingFormat.createRuntimeDecoder(
-            runtimeProviderContext,
-            producedDataType);
+    final DeserializationSchema<RowData> deserializer =
+        decodingFormat.createRuntimeDecoder(runtimeProviderContext, producedDataType);
 
-    final SourceFunction<RowData> sourceFunction = new FlinkRssConnectorSourceFunction(
-            deserializer, uris, refreshInterval);
+    final SourceFunction<RowData> sourceFunction =
+        new FlinkRssConnectorSourceFunction(deserializer, uris, refreshInterval);
 
     return SourceFunctionProvider.of(sourceFunction, false);
   }
